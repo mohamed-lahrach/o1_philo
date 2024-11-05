@@ -53,7 +53,6 @@ int initialize_philosophers(t_data *data, t_philosopher **philos)
     }
     pthread_mutex_init(&data->print_mutex, NULL);
     data->someone_died = 0;
-
     i = 0;
     while (i < data->number_of_philosophers)
     {
