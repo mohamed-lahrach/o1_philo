@@ -66,13 +66,19 @@ int initialize_philosophers(t_data *data, t_philosopher **philos)
     {
         (*philos)[i].id = i + 1;
         (*philos)[i].data = data;
+        
         (*philos)[i].left_fork = &data->forks[i];
         (*philos)[i].right_fork = &data->forks[(i + 1) % data->number_of_philosophers];
 
         // Set last_meal_time to the simulation's start_time
         (*philos)[i].last_meal_time = data->start_time;
-
         (*philos)[i].meals_eaten = 0;
+
+        if ((*philos)[i].id % 2 == 0)
+        {
+            (*philos)[i].left_fork = &data->forks[(i + 1) % data->number_of_philosophers];
+            (*philos)[i].right_fork = &data->forks[i];
+        }
         i++;
     }
     return (0);

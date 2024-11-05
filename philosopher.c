@@ -30,6 +30,7 @@ void    *philosopher_routine(void *arg)
             break;
         philo_sleep(philo);
         think(philo);
+        usleep(500);
     }
     return (NULL);
 }

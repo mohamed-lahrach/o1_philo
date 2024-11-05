@@ -50,7 +50,7 @@ void    monitor_philosophers(t_philosopher *philos, t_data *data)
         {
             pthread_mutex_lock(&data->print_mutex);
             time_since_last_meal = get_current_time() - philos[i].last_meal_time;
-            if (time_since_last_meal >= data->time_to_die)
+            if (time_since_last_meal > data->time_to_die)
             {
                 data->someone_died = 1;
                 printf("%lld %d died\n",
