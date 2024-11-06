@@ -17,8 +17,10 @@ void error_exit(const char *error)
 void parse_arguments(int argc, char **argv, t_data *data)
 {
     if (argc != 5 && argc != 6)
-        error_exit("Wrong input: \n" G "Correct is ./philo 5 800 200 200 5" RST);
+        error_exit("Wrong input: \n" G "Correct is ./philo nbr_of_philos time_to_die time_to_eat time_to_spleep [limit_meals]" RST);
     data->number_of_philosophers = ft_atol(argv[1]);
+    if (data->number_of_philosophers <= 0)
+        error_exit("Number of philosophers must be greater than 0");
     data->time_to_die = ft_atol(argv[2]);
     data->time_to_eat = ft_atol(argv[3]);
     data->time_to_sleep = ft_atol(argv[4]);

@@ -69,6 +69,7 @@ void        eat(t_philosopher *philo);
 void        put_down_forks(t_philosopher *philo);
 void        philo_sleep(t_philosopher *philo);
 void        think(t_philosopher *philo);
+void        show_last_meal_time(t_philosopher *philo);
 
 /* utils.c */
 long long   get_current_time(void);

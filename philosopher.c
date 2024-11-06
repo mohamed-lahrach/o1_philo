@@ -12,14 +12,8 @@ void    *philosopher_routine(void *arg)
     t_philosopher *philo;
 
     philo = (t_philosopher *)arg;
-
-    // Remove redundant initialization of last_meal_time
-    // philo->last_meal_time = get_current_time();
-
-    // To prevent deadlocks in even philosophers
     if (philo->id % 2 == 0)
         usleep(100);
-
     while (1)
     {
         take_forks(philo);
@@ -31,6 +25,8 @@ void    *philosopher_routine(void *arg)
         philo_sleep(philo);
         think(philo);
         usleep(500);
+        if(philo->data->someone_died)
+            break;
     }
     return (NULL);
 }

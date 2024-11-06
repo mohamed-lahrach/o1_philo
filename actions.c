@@ -35,7 +35,6 @@ void eat(t_philosopher *philo)
     pthread_mutex_lock(&philo->data->print_mutex);
     philo->last_meal_time = get_current_time();
     pthread_mutex_unlock(&philo->data->print_mutex);
-
     print_action(philo, "is eating");
     precise_usleep(philo->data->time_to_eat, philo);
     philo->meals_eaten += 1;
@@ -72,3 +71,4 @@ void think(t_philosopher *philo)
 {
     print_action(philo, "is thinking");
 }
+

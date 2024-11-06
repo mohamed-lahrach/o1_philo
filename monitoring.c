@@ -53,10 +53,8 @@ void    monitor_philosophers(t_philosopher *philos, t_data *data)
             if (time_since_last_meal > data->time_to_die)
             {
                 data->someone_died = 1;
-                printf("%lld %d died\n",
-                get_timestamp(data->start_time), philos[i].id);
+                printf("%lld %d died\n", get_timestamp(data->start_time), philos[i].id);
                 pthread_mutex_unlock(&data->print_mutex);
-                exit(0);
                 return ;
             }
             if (data->number_of_times_each_philosopher_must_eat != -1 &&
