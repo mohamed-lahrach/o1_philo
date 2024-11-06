@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     t_philosopher *philos;
     int i = 0;
 
-    ft_memset(&data, 0, sizeof(t_data));
+    memset(&data, 0, sizeof(t_data));
     parse_arguments(argc, argv, &data);
     data.start_time = get_current_time();
 
