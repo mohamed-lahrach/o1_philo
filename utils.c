@@ -49,7 +49,7 @@ void    print_action(t_philosopher *philo, char *action)
     pthread_mutex_lock(&philo->data->print_mutex);
     if (!philo->data->someone_died){
         printf("%lld %d %s\n",get_timestamp(philo->data->start_time), philo->id, action);
-        //printf("last_meal_time updated to %lld\n", philo->last_meal_time);
+        // printf("last_meal_time updated to %lld\n", philo->last_meal_time);
     }
     pthread_mutex_unlock(&philo->data->print_mutex);
 }
