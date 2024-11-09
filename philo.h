@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:51 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/09 19:05:50 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/09 19:23:34 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ typedef struct s_philosopher
 }								t_philosopher;
 
 /* init.c */
-void							parse_arguments(int argc, char **argv,
+int								parse_arguments(int argc, char **argv,
 									t_data *data);
 int								initialize_philosophers(t_data *data,
 									t_philosopher **philos);
-void							error_exit(const char *error);
+int								error_exit(const char *error);
 
 /* philosopher.c */
 void							*philosopher_routine(void *arg);

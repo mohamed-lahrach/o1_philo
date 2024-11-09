@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:01:42 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/09 19:01:43 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/09 19:26:10 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	memset(&data, 0, sizeof(t_data));
-	parse_arguments(argc, argv, &data);
+	if (parse_arguments(argc, argv, &data) == 0)
+	{
+		return (1);
+	}
 	data.start_time = get_current_time();
 	if (initialize_philosophers(&data, &philos))
 		return (1);
