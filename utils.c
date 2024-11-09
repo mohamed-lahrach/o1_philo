@@ -3,81 +3,92 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: [Your Name]                                  +#+  +:+       +#+        */
+/*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: [Date]                                   #+#    #+#             */
-/*   Updated: [Date]                                   ###   ########.fr       */
+/*   Created: 2024/11/09 19:03:09 by mlahrach          #+#    #+#             */
+/*   Updated: 2024/11/09 19:03:10 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-
-/**
- * @brief Get the current timestamp in milliseconds.
- * 
- * @return long long Current time in milliseconds.
- */
-long long   get_current_time(void)
+long long	get_current_time(void)
 {
-    struct timeval  time;
+	struct timeval	time;
 
-    gettimeofday(&time, NULL);
-    return ((time.tv_sec * 1000LL) + (time.tv_usec / 1000));
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000LL) + (time.tv_usec / 1000));
 }
 
-/**
- * @brief Get the timestamp relative to the simulation start time.
- * 
- * @param start_time Simulation start time.
- * @return long long Timestamp relative to the start time.
- */
-long long   get_timestamp(long long start_time)
+long long	get_timestamp(long long start_time)
 {
-    return (get_current_time() - start_time);
+	return (get_current_time() - start_time);
 }
 
-/**
- * @brief Print an action to the console in the required format.
- * 
- * @param philo Philosopher performing the action.
- * @param action Action string to print.
- */
-void    print_action(t_philosopher *philo, char *action)
+void	print_action(t_philosopher *philo, char *action)
 {
-    pthread_mutex_lock(&philo->data->print_mutex);
-    if (!philo->data->someone_died){
-        printf("%lld %d %s\n",get_timestamp(philo->data->start_time), philo->id, action);
-        // printf("last_meal_time updated to %lld\n", philo->last_meal_time);
-    }
-    pthread_mutex_unlock(&philo->data->print_mutex);
+	pthread_mutex_lock(&philo->data->print_mutex);
+	if (!philo->data->someone_died)
+	{
+		printf("%lld %d %s\n", get_timestamp(philo->data->start_time),
+			philo->id, action);
+	}
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
-
-/**
- * @brief Sleep for a given time in milliseconds, checking for death.
- * 
- * @param time_in_ms Time to sleep in milliseconds.
- * @param philo Philosopher sleeping.
- */
-void    precise_usleep(long long time_in_ms, t_philosopher *philo)
+void	precise_usleep(long long time_in_ms, t_philosopher *philo)
 {
-    long long start_time;
-    long long current_time;
+	long long	start_time;
+	long long	current_time;
 
-    start_time = get_current_time();
-    while (1)
-    {
-        current_time = get_current_time();
-        if (current_time - start_time >= time_in_ms)
-            break;
-        usleep(100);
-        pthread_mutex_lock(&philo->data->print_mutex);
-        if (philo->data->someone_died)
-        {
-            pthread_mutex_unlock(&philo->data->print_mutex);
-            break;
-        }
-        pthread_mutex_unlock(&philo->data->print_mutex);
-    }
+	start_time = get_current_time();
+	while (1)
+	{
+		current_time = get_current_time();
+		if (current_time - start_time >= time_in_ms)
+			break ;
+		usleep(100);
+		pthread_mutex_lock(&philo->data->print_mutex);
+		if (philo->data->someone_died)
+		{
+			pthread_mutex_unlock(&philo->data->print_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->print_mutex);
+	}
 }
+// int simulation_finished(t_data *data)
+// {
+//     if (data->someone_died)
+//         return (1);
+//     if (data->number_of_times_each_philosopher_must_eat != -1)
+//     {
+//         if (all_philosophers_satisfied(data->, data))
+//             return (1);
+//     }
+//     return (0);
+// }
+
+// void precise_usleep(long msec, t_data *data)
+// {
+//     long start;
+//     long elapsed;
+//     long rem;
+
+//     start = get_current_time() * 1000;
+//     while ((get_current_time() * 1000) - start < msec)
+//     {
+//         // 1
+//         if (simulation_finished(data))
+//             break ;
+//         elapsed = (get_current_time() * 1000) - start;
+//         rem = msec - elapsed;
+//         if (rem > 1000)
+//             usleep(rem / 2);
+//         else
+//         {
+//             // spinlocker
+//             while ((get_current_time() * 1000) - start < msec)
+//                 ;
+//         }
+//     }
+// }
