@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:25 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/09 19:02:26 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/10 17:36:52 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static const char	*valid_input(const char *str)
 
 long	ft_atol(const char *str)
 {
-	long num;
+	long	num;
 
 	num = 0;
 	str = valid_input(str);

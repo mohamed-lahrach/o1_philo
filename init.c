@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:19 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/09 19:33:14 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/10 19:36:29 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ int	error_exit(const char *error)
 	printf(RED "%s\n" RST, error);
 	return (0);
 }
+
 int	validate_data(t_data *data)
 {
 	if (data->time_to_die < 60 || data->time_to_eat < 60
 		|| data->time_to_sleep < 60)
 		return (error_exit("Use timestamps major than 60ms"));
-	if (data->number_of_times_each_philosopher_must_eat <= 0
-		&& data->number_of_times_each_philosopher_must_eat != -1)
+	if (data->nbr_times_must_eat <= 0
+		&& data->nbr_times_must_eat != -1)
 		return (error_exit("Number of meals must be greater than 0"));
 	if (data->number_of_philosophers == 0)
 		return (error_exit("Number of philosophers must be greater than 0"));
@@ -38,17 +39,20 @@ int	validate_data(t_data *data)
 int	parse_arguments(int argc, char **argv, t_data *data)
 {
 	if (argc != 5 && argc != 6)
-		return (error_exit("Wrong input: \n" G "Correct is ./philo nbr_of_philos time_to_die time_to_eat time_to_spleep [limit_meals]" RST));
+		return (error_exit("Wrong input: \n" G "Correct is ./philo "
+				"nbr_of_philos time_to_die "
+				"time_to_eat time_to_sleep [limit_meals]" RST));
 	data->number_of_philosophers = ft_atol(argv[1]);
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
 	if (argv[5])
-		data->number_of_times_each_philosopher_must_eat = ft_atol(argv[5]);
+		data->nbr_times_must_eat = ft_atol(argv[5]);
 	else
-		data->number_of_times_each_philosopher_must_eat = -1;
+		data->nbr_times_must_eat = -1;
 	return (validate_data(data));
 }
+
 void	initialize_philosopher_data(t_data *data, t_philosopher *philos)
 {
 	int	i;
@@ -67,11 +71,12 @@ void	initialize_philosopher_data(t_data *data, t_philosopher *philos)
 				% data->number_of_philosophers];
 			philos[i].right_fork = &data->forks[i];
 		}
-		philos[i].last_meal_time = data->start_time;
+		philos[i].time_last_meal = data->start_time;
 		philos[i].meals_eaten = 0;
 		i++;
 	}
 }
+
 int	initialize_philosophers(t_data *data, t_philosopher **philos)
 {
 	int	i;
@@ -85,7 +90,7 @@ int	initialize_philosophers(t_data *data, t_philosopher **philos)
 		return (1);
 	}
 	pthread_mutex_init(&data->print_mutex, NULL);
-	data->someone_died = 0;
+	data->dead_or_full_eaten = 0;
 	i = 0;
 	while (i < data->number_of_philosophers)
 	{
