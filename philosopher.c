@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:03:01 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/10 19:21:13 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:34:32 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	*philosopher_routine(void *arg)
 		take_forks(philo);
 		eat(philo);
 		put_down_forks(philo);
+		
 		if (philo->data->dead_or_full_eaten)
 			break ;
 		philo_sleep(philo);

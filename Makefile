@@ -10,7 +10,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lpthread
+	$(CC)  $(CFLAGS) -o $(NAME) $(OBJS) -lpthread
 
 %.o: %.c philo.h
 	$(CC) $(CFLAGS) -c $< -o $@
