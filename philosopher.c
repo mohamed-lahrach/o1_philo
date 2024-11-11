@@ -6,15 +6,15 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:03:01 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/11 19:34:32 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/11 22:15:11 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*philosopher_routine(void *arg)
+void *philosopher_routine(void *arg)
 {
-	t_philosopher	*philo;
+	t_philosopher *philo;
 
 	philo = (t_philosopher *)arg;
 	if (philo->id % 2 == 0)
@@ -24,9 +24,8 @@ void	*philosopher_routine(void *arg)
 		take_forks(philo);
 		eat(philo);
 		put_down_forks(philo);
-		
 		if (philo->data->dead_or_full_eaten)
-			break ;
+			break;
 		philo_sleep(philo);
 		think(philo);
 		usleep(500);

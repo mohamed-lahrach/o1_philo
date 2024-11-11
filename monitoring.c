@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:45 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/11 19:54:30 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/11 22:11:21 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,10 @@ void	check_philosopher(t_data *data, int i)
 {
 	long long	time_since_last_meal;
 	long		current_time;
-	int			debug;
 
-	debug = 1;
 	pthread_mutex_lock(&data->print_mutex);
 	current_time = get_current_time(MILLISECONDS);
 	time_since_last_meal = current_time - data->philos[i].time_last_meal;
-	if (debug)
-	{
-		printf("====================================\n");
-		printf(RST "philosopher %d\n", data->philos[i].id);
-		printf("time since last meal: %lld\n", time_since_last_meal);
-		printf("current time in monitoring: %ld\n", current_time);
-		printf("time last meal in monitoring: %lld\n",
-			data->philos[i].time_last_meal);
-		printf("time to die in monitoring: %d\n", data->time_to_die);
-		printf("start time: in monitoring%lld\n", data->start_time);
-		printf("get_timestamp: %lld\n", get_timestamp(data->start_time));
-		printf("====================================\n");
-	}
 	if (time_since_last_meal > data->time_to_die)
 	{
 		data->dead_or_full_eaten = 1;
