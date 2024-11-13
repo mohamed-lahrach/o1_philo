@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:45 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/11 22:11:21 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:31:25 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	monitor_philosophers(t_data *data)
 		while (i < data->number_of_philosophers)
 		{
 			check_philosopher(data, i);
-			if (data->dead_or_full_eaten)
+			if (simulation_finished(&data->philos[i]))
 				return ;
 			i++;
 		}

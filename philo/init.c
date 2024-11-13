@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:19 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/10 19:36:29 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:02:26 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	validate_data(t_data *data)
 	if (data->time_to_die < 60 || data->time_to_eat < 60
 		|| data->time_to_sleep < 60)
 		return (error_exit("Use timestamps major than 60ms"));
-	if (data->nbr_times_must_eat <= 0
-		&& data->nbr_times_must_eat != -1)
+	if (data->nbr_times_must_eat <= 0 && data->nbr_times_must_eat != -1)
 		return (error_exit("Number of meals must be greater than 0"));
 	if (data->number_of_philosophers == 0)
 		return (error_exit("Number of philosophers must be greater than 0"));

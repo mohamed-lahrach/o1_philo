@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:03:09 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/11 18:52:01 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:09:21 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,22 @@ void	print_action(t_philosopher *philo, char *action)
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
-void	precise_usleep(long long msec, t_philosopher *philo)
+int	simulation_finished(t_philosopher *philo)
+{
+	pthread_mutex_lock(&philo->data->print_mutex);
+	if (philo->data->dead_or_full_eaten)
+	{
+		pthread_mutex_unlock(&philo->data->print_mutex);
+		return (1);
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->data->print_mutex);
+		return (0);
+	}
+}
+
+void	precise_usleep(long long msec)
 {
 	long	start;
 	long	elapsed;
@@ -50,8 +65,6 @@ void	precise_usleep(long long msec, t_philosopher *philo)
 	start = get_current_time(MICROSECONDS);
 	while (get_current_time(MICROSECONDS) - start < msec)
 	{
-		if (philo->data->dead_or_full_eaten)
-			break ;
 		elapsed = get_current_time(MICROSECONDS) - start;
 		rem = msec - elapsed;
 		if (rem > 1000)

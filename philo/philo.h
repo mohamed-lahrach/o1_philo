@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:51 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/11 22:11:36 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:09:36 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ long long						get_current_time(enum e_units unit);
 long long						get_timestamp(long long start_time);
 void							print_action(t_philosopher *philo,
 									char *action);
-void							precise_usleep(long long msec,
-									t_philosopher *philo);
+void							precise_usleep(long long msec);
+int								simulation_finished(t_philosopher *philo);
 
 /* monitoring.c */
 void							monitor_philosophers(t_data *data);
