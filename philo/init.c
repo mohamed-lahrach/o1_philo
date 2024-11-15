@@ -6,42 +6,37 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:19 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/13 18:02:26 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:30:49 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	error_exit(const char *error)
-{
-	printf(RED "%s\n" RST, error);
-	return (0);
-}
-
 int	validate_data(t_data *data)
 {
 	if (data->time_to_die < 60 || data->time_to_eat < 60
 		|| data->time_to_sleep < 60)
-		return (error_exit("Use timestamps major than 60ms"));
-	if (data->nbr_times_must_eat <= 0 && data->nbr_times_must_eat != -1)
-		return (error_exit("Number of meals must be greater than 0"));
-	if (data->number_of_philosophers == 0)
-		return (error_exit("Number of philosophers must be greater than 0"));
-	else if (data->number_of_philosophers == 1)
-	{
-		printf("0 1 died\n");
 		return (0);
-	}
+	if (data->nbr_times_must_eat <= 0 && data->nbr_times_must_eat != -1)
+		return (0);
+	if (data->number_of_philosophers == 0)
+		return (0);
 	return (1);
 }
 
-int	parse_arguments(int argc, char **argv, t_data *data)
+void	*parse_arguments(int argc, char **argv, t_data *data)
 {
 	if (argc != 5 && argc != 6)
-		return (error_exit("Wrong input: \n" G "Correct is ./philo "
-				"nbr_of_philos time_to_die "
-				"time_to_eat time_to_sleep [limit_meals]" RST));
+	{
+		printf("Error: Invalid number of arguments\n");
+		return (NULL);
+	}
 	data->number_of_philosophers = ft_atol(argv[1]);
+	if (data->number_of_philosophers == 1)
+	{
+		printf("0 1 died\n");
+		return (NULL);
+	}
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
@@ -49,7 +44,12 @@ int	parse_arguments(int argc, char **argv, t_data *data)
 		data->nbr_times_must_eat = ft_atol(argv[5]);
 	else
 		data->nbr_times_must_eat = -1;
-	return (validate_data(data));
+	if (validate_data(data) == 0)
+	{
+		printf("Error: Invalid input\n");
+		return (NULL);
+	}
+	return (data);
 }
 
 void	initialize_philosopher_data(t_data *data, t_philosopher *philos)

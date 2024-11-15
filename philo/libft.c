@@ -6,7 +6,7 @@
 /*   By: mlahrach <mlahrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:02:25 by mlahrach          #+#    #+#             */
-/*   Updated: 2024/11/10 17:36:52 by mlahrach         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:28:40 by mlahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static inline bool	is_digit(char c)
 	return (c >= '0' && c <= '9');
 }
 
-static const char	*valid_input(const char *str)
+static int	valid_input(const char *str)
 {
 	int			len;
 	const char	*number;
@@ -33,15 +33,17 @@ static const char	*valid_input(const char *str)
 	if (*str == '+')
 		str++;
 	else if (*str == '-')
-		error_exit("Negative number");
+		return (0);
 	if (!is_digit(*str))
-		error_exit("Invalid number");
+		return (0);
 	number = str;
 	while (is_digit(number[len]))
 		len++;
+	if (number[len] != '\0')
+		return (0);
 	if (len > 10)
-		error_exit("Number > INT_MAX");
-	return (number);
+		return (0);
+	return (1);
 }
 
 long	ft_atol(const char *str)
@@ -49,13 +51,17 @@ long	ft_atol(const char *str)
 	long	num;
 
 	num = 0;
-	str = valid_input(str);
-	while (is_digit(*str))
+	if (valid_input(str) == 0)
+		return (0);
+	else
 	{
-		num = num * 10 + *str - '0';
-		str++;
+		while (is_digit(*str))
+		{
+			num = num * 10 + *str - '0';
+			str++;
+		}
 	}
 	if (num > INT_MAX)
-		error_exit("Number > INT_MAX");
+		return (0);
 	return (num);
 }
